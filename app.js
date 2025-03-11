@@ -1,45 +1,54 @@
 let listaNombres = []; // Array para almacenar los nombres
 
 function agregarAmigo() {
-    let nombreInput = document.getElementById("amigo"); 
-    let nombre = nombreInput.value.trim(); // Obtener valor y eliminar espacios
+    let nombreUsuario = document.getElementById("amigo");
+    let nombre = nombreUsuario.value.trim(); // Obtener valor y eliminar espacios vacíos
 
-    if (nombre !== "") {
-        listaNombres.push(nombre); // Agregar el nombre al array
-        actualizarLista(); // Mostrar en <ul>
-        nombreInput.value = ""; // Limpiar input
-    } else {
-        alert("Por favor, ingresa un nombre válido.");
+    // Verificar si el input contiene solo números
+    if (!isNaN(nombre) || nombre === "") {
+        alert("Por favor, ingresa un nombre válido sin números no se puede dejar el espacio en blanco.");
+        return; // Detiene la ejecución si es un número o está vacío
     }
+
+    listaNombres.push(nombre); // Agregar al array
+    actualizarLista(); // Llamar función para actualizar la interfaz
+    document.getElementById("amigo").value = ""; // Limpiar el input
 }
 
 function actualizarLista() {
     let lista = document.getElementById("listaAmigos");
     lista.innerHTML = ""; // Limpiar lista antes de actualizar
 
-    listaNombres.forEach(nombre => {
+    listaNombres.forEach(nombreUsua => {
+
         let li = document.createElement("li");
-        li.textContent = nombre;
+        li.textContent = nombreUsua;
+        console.log(nombreUsua);
         lista.appendChild(li);
     });
 }
 
 function sortearAmigo() {
-    if (listaNombres.length < 2) {
-        alert("Debes ingresar al menos 2 nombres para sortear.");
+    if (listaNombres.length === 0) {
+        alert("No hay nombres en la lista para sortear.");
         return;
     }
 
-    let listaSorteo = [...listaNombres]; // Copia del array
-    listaSorteo.sort(() => Math.random() - 0.5); // Mezclar aleatoriamente
+    let nombreSorteado = listaNombres[Math.floor(Math.random() * listaNombres.length)];
 
     let resultadoLista = document.getElementById("resultado");
-    resultadoLista.innerHTML = ""; // Limpiar antes de actualizar
+    resultadoLista.innerHTML = ""; // Limpiar resultado anterior
 
-    listaSorteo.forEach((nombre, index) => {
-        let siguiente = listaSorteo[(index + 1) % listaSorteo.length]; // Ciclo de amigos
-        let li = document.createElement("li");
-        li.textContent = `${nombre} → ${siguiente}`;
-        resultadoLista.appendChild(li);
-    });
+    let li = document.createElement("li");
+    li.textContent = `El nombre sorteado es: ${nombreSorteado}`;
+    resultadoLista.appendChild(li);
+}
+function reinicio() {
+    // Limpia la lista de amigos
+    document.getElementById("listaAmigos").innerHTML = "";
+    // Limpia los resultados
+    document.getElementById("resultado").innerHTML = "";
+    // Limpia el campo de entrada
+    document.getElementById("amigo").value = "";
+    listaNombres.length = 0;
 }

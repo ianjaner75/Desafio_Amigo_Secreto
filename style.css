@@ -160,3 +160,19 @@ ul {
 .button-draw:hover {
     background-color: var(--color-button-hover);
 }
+.button-reinicio img {
+    width: 80px; /* Ajusta el tamaño según necesites */
+    height: 40px;
+    margin-right: 40px; /* Espacio entre la imagen y el texto */
+}
+
+.button-reinicio {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 40px;
+    color: var(--color-white);
+    background-color: var(--color-button);
+    font-size: 16px;
+}
+
